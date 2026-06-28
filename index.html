@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graveyard Words</title>
+    <!-- Garamond Font Loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Styling & Cozy Dark Aesthetic */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body, html {
+            width: 100%;
+            height: 100%;
+            font-family: 'EB Garamond', serif;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+        /* Starry Background Container */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            background-color: #050505;
+        }
+        /* Content Wrapper on top of stars */
+        .site-container {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.1);
+            margin-bottom: 25px;
+        }
+        /* Navigation Buttons */
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #cdcdcd;
+            padding: 10px 24px;
+            font-family: 'EB Garamond', serif;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 8px rgba(255,255,255,0.1);
+        }
+        /* Content Sections */
+        .content-section {
+            display: none;
+            width: 100%;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        .content-section.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Text styling inside About */
+        .cozy-text {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            text-align: center;
+            color: #b0b0b0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        /* Footer Styling */
+        footer {
+            margin-top: auto;
+            padding-top: 60px;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #707070;
+            line-height: 1.6;
+            width: 100%;
+        }
+        footer a {
+            color: #909090;
+            text-decoration: none;
+            border-bottom: 1px dashed #505050;
+            transition: color 0.3s;
+        }
+        footer a:hover {
+            color: #ffffff;
+        }
+        .copyright {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+/* Diary Form Styling */
+        .diary-form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+            padding: 12px;
+            color: #ffffff;
+            font-family: 'EB Garamond', serif;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        /* Canvas Sketchpad Design */
+        .canvas-container {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: #111111;
+            border-radius: 4px;
+            overflow: hidden;
+            text-align: center;
+        }
+        #drawingCanvas {
+            display: block;
+            background: #111111;
+            cursor: crosshair;
+            width: 100%;
+            max-width: 100%;
+            height: 300px;
+        }
+        .canvas-controls {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: right;
+        }
+        /* Buttons inside form */
+        .form-btn {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.1rem;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .secondary-btn {
+            background: transparent;
+            color: #909090;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .secondary-btn:hover {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .main-submit-btn {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 14px;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+        .main-submit-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(255,255,255,0.1);
+        }
+/* Expanding Journal Box Cards Design */
+        .journal-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(2px);
+        }
+        .journal-card:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .journal-header {
+            padding: 18px 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .header-main {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            text-align: left;
+        }
+        .entry-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+        .entry-author {
+            font-size: 1rem;
+            color: #888888;
+            font-style: italic;
+        }
+        .target-badge {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.2);
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        /* Expanding/Collapsing Engine */
+        .journal-body {
+            max-height: 0;
+            padding: 0 24px;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0, 1, 0, 1); /* Ultra smooth collapse fallback */
+            text-align: left;
+            border-top: 1px solid transparent;
+        }
+        .journal-card.expanded .journal-body {
+            max-height: 2000px; /* Big limit so long posts don't clip */
+            padding: 20px 24px;
+            opacity: 1;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(1, 0, 1, 0); /* Smooth unfold */
+        }
+        .body-text {
+            font-size: 1.25rem;
+            line-height: 1.7;
+            color: #dcdcdc;
+            white-space: pre-wrap;
+        }
+        /* Displaying Saved Art Sketches safely */
+        .saved-art-wrapper {
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #111111;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 400px;
+            overflow: hidden;
+        }
+        .saved-art-img {
+            display: block;
+            width: 100%;
+            height: auto;
+            mix-blend-mode: screen; /* Blends the drawing seamlessly into dark aesthetic */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Moving Stars Container -->
+    <div id="particles-js"></div>
+
+    <!-- Main Site Layout -->
+    <div class="site-container">
+        <header>
+            <h1>Graveyard Words</h1>
+            <nav>
+                <button class="nav-btn active" onclick="switchTab('about')">About</button>
+                <button class="nav-btn" onclick="switchTab('diary')">Your Diary</button>
+                <button class="nav-btn" onclick="switchTab('read')">Read Others</button>
+            </nav>
+        </header>
+
+        <!-- ABOUT PAGE -->
+        <main id="about" class="content-section active">
+            <div class="cozy-text">
+                <p>Welcome. This is a safe space for writing your journals, quiet thoughts, and unspoken feelings.</p>
+                <br>
+                <p>Go to <strong>"Your Diary"</strong> to write and cast your words into the dark. You can post entirely anonymously, and pour out your heart out. If you want to see what others have left behind, explore <strong>"Read Others"</strong> to read their journals.</p>
+            </div>
+        </main>
+
+       <!-- DIARY PAGE -->
+<main id="diary" class="content-section">
+    <div class="diary-form-container">
+        <!-- Text Inputs -->
+        <div class="form-group">
+            <label>Your Name (Leave blank to stay anonymous)</label>
+            <input type="text" id="authorName" placeholder="Anonymous">
+        </div>
+        
+        <div class="form-group">
+            <label>For Someone? (Optional)</label>
+            <input type="text" id="forSomeone" placeholder="e.g., For a lost friend, to the universe...">
+        </div>
+
+        <div class="form-group">
+            <label>Title of your thought</label>
+            <input type="text" id="journalTitle" placeholder="Give it a title..." required>
+        </div>
+
+        <div class="form-group">
+            <label>Write your thoughts...</label>
+            <textarea id="journalContent" rows="8" placeholder="Pour your heart out here..." required></textarea>
+        </div>
+
+        <!-- Drawing Canvas Area -->
+        <div class="form-group">
+            <label>Add a sketch or art to your thoughts (Optional)</label>
+            <div class="canvas-container">
+                <canvas id="drawingCanvas" width="500" height="300"></canvas>
+                <div class="canvas-controls">
+                    <button type="button" class="form-btn secondary-btn" onclick="clearCanvas()">Clear Drawing</button>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="form-btn main-submit-btn" onclick="submitJournal()">Cast into the Graveyard</button>
+    </div>
+</main>
+        <!-- READ OTHERS PAGE (Placeholder for now) -->
+        <main id="read" class="content-section">
+            <div class="cozy-text">
+                <p>[The transparent interactive journal boxes will load here from Firestore]</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>If you want to talk about anything, show me anything, you can always mail me. i love talking to strangers! 
+
+<a href="mailto:ilosayzolo@gmail.com">ilosayzolo@gmail.com</a></p>
+            <div class="copyright">made by ilosazolo &copy; 2026</div>
+        </footer>
+    </div>
+
+    <!-- Free Stars Background Library Config Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Your custom live credentials
+        const firebaseConfig = {
+            apiKey: "AIzaSyBrsqAcI4TbTKPiRzhd-VrhXQJTr7Lzzd8",
+            authDomain: "graveyard-words.firebaseapp.com",
+            projectId: "graveyard-words",
+            storageBucket: "graveyard-words.firebasestorage.app",
+            messagingSenderId: "915982371340",
+            appId: "1:915982371340:web:a4d2b04dc5c8c913f57c29",
+            measurementId: "G-YSE5EEKV9L"
+        };
+
+        // Initialize Firebase & Firestore Database
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Make functions globally available for buttons
+        window.switchTab = function(tabId) {
+            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+
+            // If user clicks "Read Others", pull latest posts from Firebase automatically
+            if (tabId === 'read') {
+                loadJournals();
+            }
+        }
+
+        // --- DRAWING CANVAS LOGIC ---
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        canvas.addEventListener('mousedown', (e) => { isDrawing = true; draw(e); });
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', () => { isDrawing = false; ctx.beginPath(); });
+        canvas.addEventListener('mouseleave', () => { isDrawing = false; ctx.beginPath(); });
+        canvas.addEventListener('touchstart', (e) => { isDrawing = true; draw(e.touches[0]); e.preventDefault(); });
+        canvas.addEventListener('touchmove', (e) => { draw(e.touches[0]); e.preventDefault(); });
+        canvas.addEventListener('touchend', () => { isDrawing = false; ctx.beginPath(); });
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        window.clearCanvas = function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Check if canvas has anything drawn on it
+        function isCanvasBlank() {
+            const blank = document.createElement('canvas');
+            blank.width = canvas.width;
+            blank.height = canvas.height;
+            return canvas.toDataURL() === blank.toDataURL();
+        }
+
+        // --- FIREBASE WRITE: CAST JOURNAL TO FIRESTORE ---
+        window.submitJournal = async function() {
+            const title = document.getElementById('journalTitle').value.trim();
+            const content = document.getElementById('journalContent').value.trim();
+            let author = document.getElementById('authorName').value.trim();
+            const target = document.getElementById('forSomeone').value.trim();
+
+            if (!title || !content) {
+                alert("Title and thoughts cannot be left blank.");
+                return;
+            }
+
+            if (!author) author = "Anonymous";
+
+            // If something is drawn, convert canvas to an image text string (Base64)
+            let artDataURL = "";
+            if (!isCanvasBlank()) {
+                artDataURL = canvas.toDataURL();
+            }
+
+            try {
+                // Send to a collection named "journals" in your free Firestore db
+                await addDoc(collection(db, "journals"), {
+                    title: title,
+                    content: content,
+                    author: author,
+                    forSomeone: target,
+                    art: artDataURL,
+                    timestamp: new Date()
+                });
+
+                alert("Your thoughts have been permanently cast into the graveyard.");
+                
+                // Clear out the form inputs
+                document.getElementById('journalTitle').value = "";
+                document.getElementById('journalContent').value = "";
+                document.getElementById('authorName').value = "";
+                document.getElementById('forSomeone').value = "";
+                clearCanvas();
+                
+                // Route user directly to see their post
+                window.switchTab('read');
+
+            } catch (error) {
+                console.error("Error saving data: ", error);
+                alert("Something went wrong. Make sure Firestore is in test mode!");
+            }
+        }
+
+        // --- FIREBASE READ: FETCH JOURNALS & SHOW EXPANSIBLE BOXES ---
+        async function loadJournals() {
+            const readSection = document.getElementById('read');
+            readSection.innerHTML = '<div class="cozy-text"><p>Gathering wandering thoughts...</p></div>';
+
+            try {
+                const q = query(collection(db, "journals"), orderBy("timestamp", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                if (querySnapshot.empty) {
+                    readSection.innerHTML = '<div class="cozy-text"><p>The graveyard is currently completely silent. Be the first to leave an imprint.</p></div>';
+                    return;
+                }
+
+                readSection.innerHTML = ''; // Clear container
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    
+                    // Box structure
+                    const entryBox = document.createElement('div');
+                    entryBox.className = 'journal-card';
+                    
+                    let targetBadge = data.forSomeone ? `<span class="target-badge">For: ${data.forSomeone}</span>` : '';
+                    let canvasImage = data.art ? `<div class="saved-art-wrapper"><img src="${data.art}" class="saved-art-img" /></div>` : '';
+
+                    entryBox.innerHTML = `
+                        <div class="journal-header" onclick="toggleExpand(this)">
+                            <div class="header-main">
+                                <span class="entry-title">${data.title}</span>
+                                <span class="entry-author">by ${data.author}</span>
+                            </div>
+                            ${targetBadge}
+                        </div>
+                        <div class="journal-body">
+                            <p class="body-text">${data.content.replace(/\n/g, '<br>')}</p>
+                            ${canvasImage}
+                        </div>
+                    `;
+                    readSection.appendChild(entryBox);
+                });
+
+            } catch (error) {
+                console.error("Error fetching documents: ", error);
+                readSection.innerHTML = '<div class="cozy-text"><p>Failed to gather journals. Please double-check connection configurations.</p></div>';
+            }
+        }
+
+        // Toggle Expand Function for the transparent boxes
+        window.toggleExpand = function(element) {
+            const card = element.parentElement;
+            card.classList.toggle('expanded');
+        }
+
+        // Initialize Background Stars
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#ffffff" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 0.5, "opacity_min": 0.1, "sync": false } },
+                "size": { "value": 2, "random": true, "anim": { "enable": true, "speed": 1, "size_min": 0.5, "sync": false } },
+                "line_linked": { "enable": false },
+                "move": { "enable": true, "speed": 0.3, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false }
+            },
+            "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": false }, "onclick": { "enable": false } } },
+            "retina_detect": true
+        });
+    </script>
+
+   </body>
+   </html>
