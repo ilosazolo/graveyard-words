@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Graveyard Words is a cozy, dark aesthetic safe space for writing your journals, quiet thoughts, and unspoken confessions anonymously.">
-<meta name="keywords" content="anonymous journal, dark aesthetic diary, online journal, safe space writing, graveyard words, anonymous blog">
+    <meta name="keywords" content="anonymous journal, dark aesthetic diary, online journal, safe space writing, graveyard words, anonymous blog">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graveyard Words</title>
-    <!-- Garamond Font Loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
@@ -129,7 +128,7 @@
             font-size: 0.9rem;
             letter-spacing: 1px;
         }
-/* Diary Form Styling */
+        /* Diary Form Styling */
         .diary-form-container {
             max-width: 600px;
             margin: 0 auto;
@@ -221,7 +220,7 @@
             background: rgba(255, 255, 255, 0.2);
             box-shadow: 0 0 15px rgba(255,255,255,0.1);
         }
-/* Expanding Journal Box Cards Design */
+        /* Expanding Journal Box Cards Design */
         .journal-card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -318,10 +317,8 @@
 </head>
 <body>
 
-    <!-- Moving Stars Container -->
     <div id="particles-js"></div>
 
-    <!-- Main Site Layout -->
     <div class="site-container">
         <header>
             <h1>Graveyard Words</h1>
@@ -332,7 +329,6 @@
             </nav>
         </header>
 
-        <!-- ABOUT PAGE -->
         <main id="about" class="content-section active">
             <div class="cozy-text">
                 <p>Welcome. This is a safe space for writing your journals, quiet thoughts, and unspoken feelings.</p>
@@ -341,61 +337,64 @@
             </div>
         </main>
 
-       <!-- DIARY PAGE -->
-<main id="diary" class="content-section">
-    <div class="diary-form-container">
-        <!-- Text Inputs -->
-        <div class="form-group">
-            <label>Your Name (Leave blank to stay anonymous)</label>
-            <input type="text" id="authorName" placeholder="Anonymous">
-        </div>
-        
-        <div class="form-group">
-            <label>For Someone? (Optional)</label>
-            <input type="text" id="forSomeone" placeholder="e.g., For a lost friend, to the universe...">
-        </div>
-
-        <div class="form-group">
-            <label>Title of your thought</label>
-            <input type="text" id="journalTitle" placeholder="Give it a title..." required>
-        </div>
-
-        <div class="form-group">
-            <label>Write your thoughts...</label>
-            <textarea id="journalContent" rows="8" placeholder="Pour your heart out here..." required></textarea>
-        </div>
-
-        <!-- Drawing Canvas Area -->
-        <div class="form-group">
-            <label>Add a sketch or art to your thoughts (Optional)</label>
-            <div class="canvas-container">
-                <canvas id="drawingCanvas" width="500" height="300"></canvas>
-                <div class="canvas-controls">
-                    <button type="button" class="form-btn secondary-btn" onclick="clearCanvas()">Clear Drawing</button>
+        <main id="diary" class="content-section">
+            <div class="diary-form-container">
+                <div class="form-group">
+                    <label>Your Name (Leave blank to stay anonymous)</label>
+                    <input type="text" id="authorName" placeholder="Anonymous">
                 </div>
-            </div>
-        </div>
+                
+                <div class="form-group">
+                    <label>For Someone? (Optional)</label>
+                    <input type="text" id="forSomeone" placeholder="e.g., For a lost friend, to the universe...">
+                </div>
 
-        <button type="button" class="form-btn main-submit-btn" onclick="submitJournal()">Cast into the Graveyard</button>
-    </div>
-</main>
-        <!-- READ OTHERS PAGE (Placeholder for now) -->
+                <div class="form-group">
+                    <label>Diary Name (Optional - to link multiple entries together)</label>
+                    <input type="text" id="diaryNameInput" placeholder="e.g., forgotten-notes, sad-notebook">
+                </div>
+
+                <div class="form-group">
+                    <label>Title of your thought</label>
+                    <input type="text" id="journalTitle" placeholder="Give it a title..." required>
+                </div>
+
+                <div class="form-group">
+                    <label>Write your thoughts...</label>
+                    <textarea id="journalContent" rows="8" placeholder="Pour your heart out here..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Add a sketch or art to your thoughts (Optional)</label>
+                    <div class="canvas-container">
+                        <canvas id="drawingCanvas" width="500" height="300"></canvas>
+                        <div class="canvas-controls">
+                            <button type="button" class="form-btn secondary-btn" onclick="clearCanvas()">Clear Drawing</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="form-btn main-submit-btn" onclick="submitJournal()">Cast into the Graveyard</button>
+            </div>
+        </main>
+
         <main id="read" class="content-section">
-            <div class="cozy-text">
-                <p>[The transparent interactive journal boxes will load here from Firestore]</p>
+            <div class="cozy-text" style="margin-bottom: 30px;">
+                <h2 id="feedTitle" style="font-weight: 400; font-size: 2rem; letter-spacing: 1px; color: #fff;">Wandering Thoughts</h2>
+            </div>
+            <div id="journalsContainer">
+                <div class="cozy-text"><p>[The transparent interactive journal boxes will load here from Firestore]</p></div>
             </div>
         </main>
 
         <footer>
             <p>If you want to talk about anything, show me anything, you can always mail me. i love talking to strangers! 
-
-<a href="mailto:ilosayzolo@gmail.com">ilosayzolo@gmail.com</a></p>
+            <a href="mailto:ilosayzolo@gmail.com">ilosayzolo@gmail.com</a></p>
             <div class="copyright">made by ilosazolo &copy; 2026</div>
         </footer>
     </div>
 
-    <!-- Free Stars Background Library Config Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -481,6 +480,8 @@
             const content = document.getElementById('journalContent').value.trim();
             let author = document.getElementById('authorName').value.trim();
             const target = document.getElementById('forSomeone').value.trim();
+            // Clean up the diary name input (lowercase, dashed string format)
+            const diaryNameValue = document.getElementById('diaryNameInput').value.trim().toLowerCase().replace(/\s+/g, '-') || 'anonymous-pool';
 
             if (!title || !content) {
                 alert("Title and thoughts cannot be left blank.");
@@ -502,17 +503,25 @@
                     content: content,
                     author: author,
                     forSomeone: target,
+                    diaryName: diaryNameValue, // Saving custom diary label tracking
                     art: artDataURL,
                     timestamp: new Date()
                 });
 
-                alert("Your thoughts have been permanently cast into the graveyard.");
+                // SMART LINK PROMPT SYSTEM
+                if (diaryNameValue !== 'anonymous-pool') {
+                    const uniqueLink = `${window.location.origin}${window.location.pathname}?diary=${diaryNameValue}`;
+                    alert(`✨ Chapter Saved!\n\nYour post is in the general feed, but it has also been safely bound to your secret diary name.\n\nSave and share this link to view ONLY your custom diary entries:\n${uniqueLink}`);
+                } else {
+                    alert("Your thoughts have been permanently cast into the general graveyard pool.");
+                }
                 
                 // Clear out the form inputs
                 document.getElementById('journalTitle').value = "";
                 document.getElementById('journalContent').value = "";
                 document.getElementById('authorName').value = "";
                 document.getElementById('forSomeone').value = "";
+                document.getElementById('diaryNameInput').value = "";
                 clearCanvas();
                 
                 // Route user directly to see their post
@@ -526,23 +535,42 @@
 
         // --- FIREBASE READ: FETCH JOURNALS & SHOW EXPANSIBLE BOXES ---
         async function loadJournals() {
-            const readSection = document.getElementById('read');
-            readSection.innerHTML = '<div class="cozy-text"><p>Gathering wandering thoughts...</p></div>';
+            const container = document.getElementById('journalsContainer');
+            const feedTitle = document.getElementById('feedTitle');
+            container.innerHTML = '<div class="cozy-text"><p>Gathering wandering thoughts...</p></div>';
+
+            // Check URL parameters to see if viewing a specific diary link
+            const urlParams = new URLSearchParams(window.location.search);
+            const activeDiaryFilter = urlParams.get('diary');
+
+            if (activeDiaryFilter) {
+                feedTitle.innerText = `📖 Diary: ${activeDiaryFilter}`;
+            } else {
+                feedTitle.innerText = "Wandering Thoughts";
+            }
 
             try {
                 const q = query(collection(db, "journals"), orderBy("timestamp", "desc"));
                 const querySnapshot = await getDocs(q);
                 
                 if (querySnapshot.empty) {
-                    readSection.innerHTML = '<div class="cozy-text"><p>The graveyard is currently completely silent. Be the first to leave an imprint.</p></div>';
+                    container.innerHTML = '<div class="cozy-text"><p>The graveyard is currently completely silent. Be the first to leave an imprint.</p></div>';
                     return;
                 }
 
-                readSection.innerHTML = ''; // Clear container
+                container.innerHTML = ''; // Clear container
+                let customEntriesFound = 0;
 
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
                     
+                    // IF a url diary parameter exists, skip posts that do not match it
+                    if (activeDiaryFilter && data.diaryName !== activeDiaryFilter) {
+                        return; 
+                    }
+
+                    customEntriesFound++;
+
                     // Box structure
                     const entryBox = document.createElement('div');
                     entryBox.className = 'journal-card';
@@ -563,12 +591,17 @@
                             ${canvasImage}
                         </div>
                     `;
-                    readSection.appendChild(entryBox);
+                    container.appendChild(entryBox);
                 });
+
+                // Edge case: If they entered a diary URL that has no entries yet
+                if (activeDiaryFilter && customEntriesFound === 0) {
+                    container.innerHTML = `<div class="cozy-text"><p>This diary ('${activeDiaryFilter}') doesn't have any chapters bound to it yet. Be the first to cast an entry into it!</p></div>`;
+                }
 
             } catch (error) {
                 console.error("Error fetching documents: ", error);
-                readSection.innerHTML = '<div class="cozy-text"><p>Failed to gather journals. Please double-check connection configurations.</p></div>';
+                container.innerHTML = '<div class="cozy-text"><p>Failed to gather journals. Please double-check connection configurations.</p></div>';
             }
         }
 
@@ -592,7 +625,13 @@
             "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": false }, "onclick": { "enable": false } } },
             "retina_detect": true
         });
+
+        // Auto-check if the user arrived at the site through a custom diary link. If yes, take them straight to the reader tab!
+        const initialUrlCheck = new URLSearchParams(window.location.search);
+        if (initialUrlCheck.get('diary')) {
+            window.switchTab('read');
+        }
     </script>
 
-   </body>
-   </html>
+</body>
+</html>
